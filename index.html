@@ -14,9 +14,10 @@
       font-family: "Segoe UI", sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       padding: 18px;
-      overflow: hidden;
+      overflow-x: hidden;   /* CHO PHÉP CUỘN TRANG */
+      overflow-y: auto;
     }
 
     .card {
@@ -30,6 +31,7 @@
       backdrop-filter: blur(6px);
       position: relative;
       z-index: 10;
+      margin-bottom: 50px;
     }
 
     .title {
@@ -196,4 +198,5 @@
 
 </body>
 </html>
+
 
