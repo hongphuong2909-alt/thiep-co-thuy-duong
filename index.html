@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thiệp 20/11 – Kính gửi cô</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffe6f2, #e6f7ff);
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      overflow: hidden;
+    }
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffffcc;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      position: relative;
+      z-index: 10;
+    }
+    .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #d6336c;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: #444;
+    }
+    .photo {
+      width: 180px;
+      height: 240px;
+      margin: 0 auto 15px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 4px solid #ffd6e7;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .photo img {width:100%; height:100%; object-fit: cover;}
+    .message {
+      text-align: left;
+      background: #fff8fa;
+      padding: 14px;
+      border-radius: 12px;
+      border-left: 4px solid #ff66a3;
+      margin-bottom: 14px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .audio-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 10px 20px;
+      background: #ff66a3;
+      color: white;
+      font-weight: bold;
+      border-radius: 999px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 6px 14px rgba(255,102,163,0.4);
+      transition: .2s;
+    }
+    .audio-btn:hover {
+      background: #ff4d94;
+      transform: translateY(-2px);
+    }
+    .audio-status {
+      margin-top: 4px;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .petal {
+      position: fixed;
+      top: -10vh;
+      width: 14px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #ffe6f2, #ff99c8 40%, #ff4d94 100%);
+      border-radius: 60% 40% 70% 30%;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% {transform: translateY(-10vh) rotate(0deg); opacity:0;}
+      15% {opacity:0.9;}
+      100% {transform: translateY(110vh) rotate(360deg); opacity:0;}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1 class="title">Chúc mừng Ngày Nhà giáo Việt Nam 20/11</h1>
+  <p class="subtitle">Kính gửi cô!</p>
+
+  <div class="photo">
+    <img src="co.jpg" alt="Ảnh cô giáo">
+  </div>
+
+  <div class="message">
+    <p><strong>Kính gửi cô …!</strong></p>
+
+    <p>Nhân ngày Nhà giáo Việt Nam 20/11, tập thể lớp 7A – Trường THCS số 2 Phố Lu xin được gửi đến cô lời chúc sức khỏe, hạnh phúc và luôn ngập tràn niềm vui trong cuộc sống.</p>
+
+    <p>Chúng em cảm ơn cô đã đến tham dự và truyền cảm hứng học tập tiếng Anh cho chúng em trong ngày hội hôm nay.</p>
+
+    <p>Kính chúc cô luôn thành công trên con đường giảng dạy và tiếp tục lan tỏa tình yêu tiếng Anh đến với nhiều thế hệ học sinh!</p>
+
+    <p style="margin-top: 10px; font-style: italic; text-align:right;">
+      Trân trọng!<br>
+      Tập thể lớp 7A – Trường THCS số 2 Phố Lu
+    </p>
+  </div>
+
+  <button class="audio-btn" id="audioToggle">🎵 Ấn để nghe nhạc</button>
+  <div class="audio-status" id="audioStatus">(Nếu nhạc chưa phát, xin ấn lại 1 lần nữa)</div>
+
+  <audio id="bgMusic" src="nhac.mp3" preload="auto" loop></audio>
+</div>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+  const btn = document.getElementById("audioToggle");
+  const statusText = document.getElementById("audioStatus");
+  let playing = false;
+
+  btn.addEventListener("click", async () => {
+    try {
+      if (!playing) {
+        await audio.play();
+        playing = true;
+        btn.textContent = "⏸ Tạm dừng nhạc";
+        statusText.textContent = "Nhạc đang phát...";
+      } else {
+        audio.pause();
+        playing = false;
+        btn.textContent = "🎵 Ấn để nghe nhạc";
+        statusText.textContent = "(Nhạc đã tạm dừng)";
+      }
+    } catch (e) {
+      statusText.textContent = "Vui lòng ấn lại nút nếu nhạc chưa phát.";
+    }
+  });
+
+  function createPetal() {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    const left = Math.random() * 100;
+    const duration = 10 + Math.random() * 10;
+    const delay = Math.random() * 10;
+
+    petal.style.left = left + "vw";
+    petal.style.animationDuration = duration + "s";
+    petal.style.animationDelay = delay + "s";
+
+    document.body.appendChild(petal);
+
+    setTimeout(() => petal.remove(), (duration + delay) * 1000);
+  }
+
+  setInterval(createPetal, 600);
+  for (let i = 0; i < 15; i++) setTimeout(createPetal, i * 200);
+</script>
+
+</body>
+</html>
